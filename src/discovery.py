@@ -85,6 +85,8 @@ class DiscoveryFactory(Factory):
         self.timeout_called = False
 
         import random
+        import time
+        random.seed(time.time())
         self.id = random.randint(0,100)
 
         def has_sufficient_instruction_params():
