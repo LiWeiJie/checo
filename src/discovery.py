@@ -37,8 +37,11 @@ class Discovery(ProtobufReceiver):
         :param obj:
         :return:
         """
-        logging.debug("Discovery{}: received msg {} from {}"
-                      .format(self.factory.id, obj, self.transport.getPeer().host).replace('\n', ','))
+        factory_id = self.factory.id
+        if not factory_id:
+            factory_id = "NULL"
+        logging.debug("Discovery {}: received msg {} from {}"
+                      .format(factory_id, obj, self.transport.getPeer().host).replace('\n', ','))
 
         if self.state == 'SERVER':
             if isinstance(obj, pb.Discover):
