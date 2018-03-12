@@ -37,8 +37,8 @@ class Discovery(ProtobufReceiver):
         :param obj:
         :return:
         """
-        logging.debug("Discovery: received msg {} from {}"
-                      .format(obj, self.transport.getPeer().host).replace('\n', ','))
+        logging.debug("Discovery{}: received msg {} from {}"
+                      .format(self.factory.id, obj, self.transport.getPeer().host).replace('\n', ','))
 
         if self.state == 'SERVER':
             if isinstance(obj, pb.Discover):
@@ -77,6 +77,9 @@ class DiscoveryFactory(Factory):
     def __init__(self, n, t, m, inst):
         self.nodes = {}  # key = vk, val = addr
         self.timeout_called = False
+
+        import random
+        self.id = random.randint(0,100)
 
         def has_sufficient_instruction_params():
             return n is not None and \
