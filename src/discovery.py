@@ -86,6 +86,7 @@ class DiscoveryFactory(Factory):
         self.nodes = {}  # key = vk, val = addr
         self.timeout_called = False
 
+        import time
         logging.debug("Create a discoveryFactory at {}".format(time.time()))
 
         def has_sufficient_instruction_params():
