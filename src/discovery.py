@@ -88,6 +88,7 @@ class DiscoveryFactory(Factory):
         import time
         random.seed(time.time())
         self.id = random.randint(0,100)
+        logging.debug("Create a discoveryFactory at {}".format(time.time()))
 
         def has_sufficient_instruction_params():
             return n is not None and \
