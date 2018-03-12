@@ -37,20 +37,23 @@ class Discovery(ProtobufReceiver):
         :param obj:
         :return:
         """
-        factory_id = self.factory.id
-        if not factory_id:
-            factory_id = "NULL"
-        logging.debug("Discovery {}: received msg {} from {}"
-                      .format(factory_id, obj, self.transport.getPeer().host).replace('\n', ','))
+
+        logging.debug("Discovery : received msg {} from {}"
+                      .format(obj, self.transport.getPeer().host).replace('\n', ','))
 
         if self.state == 'SERVER':
+
+            factory_id = self.factory.id
+            if not factory_id:
+                factory_id = "NULL"
+
             if isinstance(obj, pb.Discover):
                 self.vk = obj.vk  # NOTE storing base64 form as is
                 self.addr = self.transport.getPeer().host + ":" + str(obj.port)
 
                 # TODO check addr to be in the form host:port
                 if self.vk not in self.nodes:
-                    logging.debug("Discovery: added node {} {}".format(self.vk, self.addr))
+                    logging.debug("Discovery {}: added node {} {}".format(factory_id, self.vk, self.addr))
                     self.nodes[self.vk] = (self.addr, self)
 
                 assert isinstance(self.factory, DiscoveryFactory)
