@@ -41,6 +41,7 @@ class Discovery(ProtobufReceiver):
         logging.debug("Discovery : received msg {} from {}"
                       .format(obj, self.transport.getPeer().host).replace('\n', ','))
 
+
         if self.state == 'SERVER':
 
             factory_id = self.factory.id
@@ -53,8 +54,9 @@ class Discovery(ProtobufReceiver):
 
                 # TODO check addr to be in the form host:port
                 if self.vk not in self.nodes:
-                    logging.debug("Discovery {}: added node {} {}".format(factory_id, self.vk, self.addr))
+                    logging.debug("Discovery: added node {} {}".format(self.vk, self.addr))
                     self.nodes[self.vk] = (self.addr, self)
+                    logging.debug("Discovery: connected nodes {}".format(self.nodes.__len__()))
 
                 assert isinstance(self.factory, DiscoveryFactory)
                 self.send_obj(pb.DiscoverReply(nodes=self.factory.make_nodes_dict()))
@@ -84,10 +86,6 @@ class DiscoveryFactory(Factory):
         self.nodes = {}  # key = vk, val = addr
         self.timeout_called = False
 
-        import random
-        import time
-        random.seed(time.time())
-        self.id = random.randint(0,100)
         logging.debug("Create a discoveryFactory at {}".format(time.time()))
 
         def has_sufficient_instruction_params():
