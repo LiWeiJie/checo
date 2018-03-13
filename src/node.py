@@ -95,7 +95,6 @@ class MyProto(ProtobufReceiver):
             self.factory.tc_runner.handle_sig(obj, self.remote_vk)
 
         elif isinstance(obj, pb.CpBlock):
-            logging.info("NODE: got CP message from {}".format(b64encode(self.remote_vk)))
             self.factory.tc_runner.handle_cp(obj, self.remote_vk)
 
         elif isinstance(obj, pb.Cons):
@@ -128,6 +127,10 @@ class MyProto(ProtobufReceiver):
         :param obj:
         :return:
         """
+        if isinstance(obj, pb.CpBlock):
+            logging.info("NODE: send CP message from {}".format(b64encode(self.factory.vk)))
+            import traceback
+            traceback.print_stack()
         ProtobufReceiver.send_obj(self, obj)
         self.factory.sent_message_log[obj.__class__.__name__] += obj.ByteSize()
 
