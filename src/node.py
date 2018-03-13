@@ -95,6 +95,7 @@ class MyProto(ProtobufReceiver):
             self.factory.tc_runner.handle_sig(obj, self.remote_vk)
 
         elif isinstance(obj, pb.CpBlock):
+            logging.info("NODE: got CP message from {}".format(b64encode(self.remote_vk)))
             self.factory.tc_runner.handle_cp(obj, self.remote_vk)
 
         elif isinstance(obj, pb.Cons):
