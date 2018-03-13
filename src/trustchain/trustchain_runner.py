@@ -52,7 +52,6 @@ class RoundState(object):
     def new_cp(self, cp):
         # type: (CpBlock) -> None
         assert isinstance(cp, CpBlock)
-        logging.info("TC: new_cp round: {}".format(cp.round))
         if self.received_cps:
             assert self.received_cps[0].round == cp.round
         self.received_cps.append(cp)

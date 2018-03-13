@@ -127,10 +127,6 @@ class MyProto(ProtobufReceiver):
         :param obj:
         :return:
         """
-        if isinstance(obj, pb.CpBlock):
-            logging.info("NODE: send CP message from {}".format(b64encode(self.factory.vk)))
-            import traceback
-            traceback.print_stack()
         ProtobufReceiver.send_obj(self, obj)
         self.factory.sent_message_log[obj.__class__.__name__] += obj.ByteSize()
 
